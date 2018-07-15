@@ -46,10 +46,10 @@ function onReceiveMsg(msg) {
 	$('#messages').append(t);
 	if (endSig) $("#messagesContainer").animate({"scrollTop": $('#messages').height() - $('#messagesContainer').height() + 110}, 100);
 }
-function onReceivePlayer0(msg){
+function onReceiveInit(msg){
 	var t = '<div class="message_box">';
 	t += '<div class="username">';
-	t += '<span class="label label-success">player0</span> ';
+	t += '<span class="label label-success">Init</span> ';
 	t += ':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	t += '</div>';
 	t += '<div class="content">' + msg + '</div>';
@@ -58,10 +58,10 @@ function onReceivePlayer0(msg){
 	$('#messages').append(t);
 	if (endSig) $("#messagesContainer").animate({"scrollTop": $('#messages').height() - $('#messagesContainer').height() + 110}, 100);
 }
-function onReceivePlayer1(msg){
+function onReceiveJudged(msg){
 	var t = '<div class="message_box">';
 	t += '<div class="username">';
-	t += '<span class="label label-success">player1</span> ';
+	t += '<span class="label label-success">judge</span> ';
 	t += ':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	t += '</div>';
 	t += '<div class="content">' + msg + '</div>';
@@ -86,8 +86,8 @@ function setName(c_name) {
 }
 function init() {
 	socket.on('chat message', onReceiveMsg);
-	socket.on('player0', onReceivePlayer0);
-	socket.on('player1', onReceivePlayer1);
+	socket.on('init', onReceiveInit);
+	socket.on('judged', onReceiveJudged);
 	socket.on('Alvolus', function(msg){console.log('turn to '+msg+' plz')});
 
 	$('#sendForm').submit(function(){
@@ -99,19 +99,19 @@ function init() {
 	t = getCookie('name');
 	var first_flag = false;
 	if (t == undefined || t == '') {
-		name = "Player";
+		name = "Monitor";
 		first_flag = true;
 		setName(name);
 	} else setName(t);
 	if (first_flag){
 		onReceiveMsg({
-			'name': 'ShadowScent Assistant',
+			'name': 'AlphaSnake Assistant',
 			'content': 'Debug only',
 			'robot': true,
 		});
 	} else
 		onReceiveMsg({
-			'name': 'ShadowScent Assistant',
+			'name': 'AlphaSnake Assistant',
 			'content': 'Debug only',
 			'robot': true,
 		});

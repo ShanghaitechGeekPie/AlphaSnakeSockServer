@@ -8,6 +8,9 @@ app.use(express.static('public'));
 app.get('/', function(req, res){
   res.sendfile('index.html');
 });
+app.get('/monitor', function(req, res){
+  res.sendfile('monitor.html');
+});
 
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -18,13 +21,13 @@ io.on('connection', function(socket){
     console.log('reset');
     io.emit('reset');
   });
-  socket.on('player0', function(msg){
-    console.log('player0: ' + msg);
-    io.emit('player0', msg);
+  socket.on('init', function(msg){
+    console.log('init: ' + msg);
+    io.emit('init', msg);
   });
-  socket.on('player1', function(msg){
-    console.log('player1: ' + msg);
-    io.emit('player1', msg);
+  socket.on('judged', function(msg){
+    console.log('judged: ' + msg);
+    io.emit('judged', msg);
   });
 });
 
