@@ -1,14 +1,14 @@
 var express = require('express')
 var app = express();
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')(http, {path: '/websocket'});
 
 app.use(express.static('public'));
 
-app.get('/', function(req, res){
+app.get('/websocket/', function(req, res){
   res.sendfile('index.html');
 });
-app.get('/monitor', function(req, res){
+app.get('/websocket/monitor', function(req, res){
   res.sendfile('monitor.html');
 });
 
