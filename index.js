@@ -3,12 +3,12 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-app.use(express.static('public'));
+app.use(express.static('public'), {path: '/websocket'});
 
-app.get('/', function(req, res){
+app.get('/websocket', function(req, res){
   res.sendfile('index.html');
 });
-app.get('/monitor', function(req, res){
+app.get('/websocket/monitor', function(req, res){
   res.sendfile('monitor.html');
 });
 
