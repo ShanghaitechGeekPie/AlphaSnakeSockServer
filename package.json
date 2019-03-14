@@ -1,7 +1,7 @@
 {
-  "name": "ShadowScent",
+  "name": "AlphaSnakeSockServer",
   "version": "0.0.1",
-  "description": "ShadowScent",
+  "description": "AlphaSnakeSockServer",
   "dependencies": {
     "express": "^4.10.2",
     "socket.io": "^2.2.0"
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/philipxyc/ShadowScentBackend.git"
+    "url": "https://github.com/ShanghaitechGeekPie/AlphaSnakeSockServer.git"
   },
   "license": "Apache-2.0"
 }
