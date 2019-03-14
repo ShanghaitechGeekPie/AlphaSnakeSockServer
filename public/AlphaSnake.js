@@ -5,24 +5,6 @@ function removeHTMLTag(str) {
 	str=str.replace(/&nbsp;/ig,'');//去掉&nbsp;
 	return str;
 }
-function getCookie(c_name) {
-	if (document.cookie.length>0) {
-		c_start=document.cookie.indexOf(c_name + "=")
-		if (c_start!=-1) {
-			c_start=c_start + c_name.length+1
-			c_end=document.cookie.indexOf(";",c_start)
-			if (c_end==-1) c_end=document.cookie.length
-			return unescape(document.cookie.substring(c_start,c_end))
-		}
-	}
-	return undefined;
-}
-function setCookie(cname, cvalue, exdays) {
-	var d = new Date();
-	d.setTime(d.getTime() + (exdays*24*60*60*1000));
-	var expires = "expires="+d.toUTCString();
-	document.cookie = cname + "=" + cvalue + "; " + expires;
-}
 function sendMsg(name, content) {
 	data={
 		'name': name,
@@ -52,7 +34,7 @@ function onReceiveInit(msg){
 	t += '<span class="label label-success">Init</span> ';
 	t += ':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	t += '</div>';
-	t += '<div class="content">' + msg + '</div>';
+	t += '<div class="content">' + JSON.stringify(msg) + '</div>';
 	t += '</div>';
 	var endSig = $('#messages').height() - $('#messagesContainer').height() + 110 < 0 || $("#messagesContainer").scrollTop() >= $('#messages').height() - 2 * $('#messagesContainer').height() + 110;
 	$('#messages').append(t);
@@ -64,7 +46,7 @@ function onReceiveJudged(msg){
 	t += '<span class="label label-success">judge</span> ';
 	t += ':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	t += '</div>';
-	t += '<div class="content">' + msg + '</div>';
+	t += '<div class="content">' + JSON.stringify(msg) + '</div>';
 	t += '</div>';
 	var endSig = $('#messages').height() - $('#messagesContainer').height() + 110 < 0 || $("#messagesContainer").scrollTop() >= $('#messages').height() - 2 * $('#messagesContainer').height() + 110;
 	$('#messages').append(t);
@@ -78,43 +60,15 @@ function onchangeEdit() {
 		$('#nameContainer').addClass('edit')
 	}
 }
-function setName(c_name) {
-	name = c_name;
-	$('#name').html(c_name);
-	$('#nameEdit').val(c_name);
-	setCookie('name', c_name, 30);
-}
 function init() {
 	socket.on('chat message', onReceiveMsg);
 	socket.on('init', onReceiveInit);
 	socket.on('judged', onReceiveJudged);
-	socket.on('Alvolus', function(msg){console.log('turn to '+msg+' plz')});
-
-	$('#sendForm').submit(function(){
-		var content = $('#content').val();
-		if (content) sendMsg(name, content);
-		$('#content').val('');
-		return false;
+	onReceiveMsg({
+		'name': 'AlphaSnake Assistant',
+		'content': 'Debug only',
+		'robot': true,
 	});
-	t = getCookie('name');
-	var first_flag = false;
-	if (t == undefined || t == '') {
-		name = "Monitor";
-		first_flag = true;
-		setName(name);
-	} else setName(t);
-	if (first_flag){
-		onReceiveMsg({
-			'name': 'AlphaSnake Assistant',
-			'content': 'Debug only',
-			'robot': true,
-		});
-	} else
-		onReceiveMsg({
-			'name': 'AlphaSnake Assistant',
-			'content': 'Debug only',
-			'robot': true,
-		});
 }
 
 var name = undefined;
