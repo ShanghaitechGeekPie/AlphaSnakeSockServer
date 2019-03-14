@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-app.use(express.static('public'), {path: '/websocket'});
+app.use('/websocket', express.static('public'));
 
 app.get('/websocket', function(req, res){
   res.sendfile('index.html');
