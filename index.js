@@ -25,7 +25,7 @@ io.on('connection', function(socket){
   });
   socket.on('init', function(msg){
     console.log('init: ' + JSON.stringify(msg));
-    if(msg.hasOwnProperty('key') && msg.key == EMIT_KEY){
+    if(msg && msg.hasOwnProperty('key') && msg.key == EMIT_KEY){
       delete msg.key;
       io.emit('init', msg);
     }
