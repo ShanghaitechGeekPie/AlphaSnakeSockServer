@@ -3,7 +3,7 @@
   "version": "0.9.1",
   "description": "AlphaSnakeSockServer",
   "dependencies": {
-    "express": "^4.10.2",
+    "express": "^4.17.3",
     "socket.io": "^1.7.4"
   },
   "scripts": {
